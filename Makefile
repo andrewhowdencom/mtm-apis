@@ -43,5 +43,6 @@ generate: ## Generates the Swagger specification
 	protoc -I/usr/local/include -I. \
   	-I$$GOPATH/src \
   	-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+	--go_out="../../pkg/go" \
 	--swagger_out=logtostderr=true:../swagger-spec \
   	*.proto
