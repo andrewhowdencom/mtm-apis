@@ -1,0 +1,55 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "faq.v1alpha1.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1alpha1/faq/{faq_id}": {
+      "get": {
+        "operationId": "GetFaq",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Faq"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "faq_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "FaqService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1alpha1Faq": {
+      "type": "object",
+      "properties": {
+        "faq_id": {
+          "type": "string",
+          "title": "Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier)\nExample: e1da1be2-eff2-11e8-a204-0f0dc88152cb"
+        }
+      },
+      "title": "FAQ represents a frequently asked question of some kind"
+    }
+  }
+}
