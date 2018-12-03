@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package v1alpha1.type;
+
+option go_package = "v1alpha1/type/faq";
+
+// FAQ represents a frequently asked question of some kind
+message Faq {
+	// Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier)
+	// Example: e1da1be2-eff2-11e8-a204-0f0dc88152cb
+	string faq_id = 1;
+}

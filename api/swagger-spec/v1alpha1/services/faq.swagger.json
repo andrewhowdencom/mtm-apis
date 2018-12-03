@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "faq.v1alpha1.proto",
+    "title": "v1alpha1/services/faq.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -22,7 +22,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1alpha1Faq"
+              "$ref": "#/definitions/typeFaq"
             }
           }
         },
@@ -41,7 +41,7 @@
     }
   },
   "definitions": {
-    "v1alpha1Faq": {
+    "typeFaq": {
       "type": "object",
       "properties": {
         "faq_id": {

@@ -39,10 +39,10 @@ help: ## Show this menu
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
 generate: ## Generates the Swagger specification
-	cd api/protobuf-spec/ && \
+	cd api/protobuf-spec && \
 	protoc -I/usr/local/include -I. \
   	-I$$GOPATH/src \
   	-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-	--go_out="../../pkg/go" \
+	--go_out=plugins=grpc:"../../pkg/go" \
 	--swagger_out=logtostderr=true:../swagger-spec \
-  	*.proto
+  	v1alpha1/**/*.proto
