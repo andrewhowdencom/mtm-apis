@@ -38,11 +38,29 @@ help: ## Show this menu
 	@echo -e $(ANSI_TITLE)Commands:$(ANSI_OFF)
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
-generate: ## Generates the Swagger specification
+.PHONY: generate
+generate: ## Generates the specification and libraries
+	FILE='v1alpha1/services/*.proto' make generate-go generate-swagger
+	FILE='v1alpha1/types/*.proto' make generate-go
+	echo "Done"
+
+.PHONY: generate-swagger
+generate-swagger: ## Generates the swagger specification
 	cd api/protobuf-spec && \
 	protoc -I/usr/local/include -I. \
-  	-I$$GOPATH/src \
-  	-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-	--go_out=plugins=grpc:"../../pkg/go" \
-	--swagger_out=logtostderr=true:../swagger-spec \
-  	v1alpha1/**/*.proto
+		-I$$GOPATH/src \
+		-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+		--swagger_out=logtostderr=true:../swagger-spec \
+		$${FILE}
+
+.PHONY: generate-go
+generate-go: ## Generates the go specification
+	cd api/protobuf-spec && \
+	protoc -I/usr/local/include -I. \
+		-I$$GOPATH/src \
+		-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+		--go_out=plugins=grpc:"../../pkg/go" \
+		$${FILE}
+	mkdir -p pkg/go/$$(dirname $${FILE})
+	mv pkg/go/github.com/andrewhowdencom/mtm-apis/pkg/go/$$(dirname $${FILE}) pkg/go/$$(dirname $$(dirname $${FILE}))
+	rm -rf pkg/go/github.com

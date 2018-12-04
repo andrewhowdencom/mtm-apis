@@ -22,7 +22,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/typeFaq"
+              "$ref": "#/definitions/typesFaq"
             }
           }
         },
@@ -41,7 +41,7 @@
     }
   },
   "definitions": {
-    "typeFaq": {
+    "typesFaq": {
       "type": "object",
       "properties": {
         "faq_id": {

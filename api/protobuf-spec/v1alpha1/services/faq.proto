@@ -1,15 +1,15 @@
 //https://cloud.google.com/apis/design/standard_methods#get
 syntax = "proto3";
 
-package v1alpha1.service;
+package v1alpha1.services;
 
 import "v1alpha1/types/faq.proto";
 import "google/api/annotations.proto";
 
-option go_package = "v1alpha1/service/faq";
+option go_package = "github.com/andrewhowdencom/mtm-apis/pkg/go/v1alpha1/services";
 
 service FaqService {
-	rpc GetFaq(GetFaqRequest) returns (v1alpha1.type.Faq) {
+	rpc GetFaq(GetFaqRequest) returns (v1alpha1.types.Faq) {
 		option (google.api.http) = {
 			get: "/v1alpha1/faq/{faq_id}"
 		};
