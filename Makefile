@@ -38,20 +38,18 @@ help: ## Show this menu
 	@echo -e $(ANSI_TITLE)Commands:$(ANSI_OFF)
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: clean
+clean: ## Cleans up
+	rm -rf \
+		pkg/go/**/* \
+		pkg/grpc-gateway/**/*
+
+
 .PHONY: generate
 generate: ## Generates the specification and libraries
-	FILE='v1alpha1/services/*.proto' make generate-go generate-swagger
+	FILE='v1alpha1/services/*.proto' make generate-go generate-grpc-gateway
 	FILE='v1alpha1/types/*.proto' make generate-go
 	echo "Done"
-
-.PHONY: generate-swagger
-generate-swagger: ## Generates the swagger specification
-	cd api/protobuf-spec && \
-	protoc -I/usr/local/include -I. \
-		-I$$GOPATH/src \
-		-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--swagger_out=logtostderr=true:../swagger-spec \
-		$${FILE}
 
 .PHONY: generate-go
 generate-go: ## Generates the go specification
@@ -64,3 +62,14 @@ generate-go: ## Generates the go specification
 	mkdir -p pkg/go/$$(dirname $${FILE})
 	mv pkg/go/github.com/andrewhowdencom/mtm-apis/pkg/go/$$(dirname $${FILE}) pkg/go/$$(dirname $$(dirname $${FILE}))
 	rm -rf pkg/go/github.com
+
+generate-grpc-gateway: ## Generates the go reverse proxy tooling
+	cd api/protobuf-spec && \
+        protoc -I/usr/local/include -I. \
+                -I$$GOPATH/src \
+		-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+		--swagger_out=logtostderr=true:../swagger-spec \
+                --grpc-gateway_out="../../pkg/grpc-gateway" \
+		$${FILE}
+	mv pkg/grpc-gateway/github.com/andrewhowdencom/mtm-apis/pkg/go/$$(dirname $${FILE}) pkg/grpc-gateway/$$(dirname $$(dirname $${FILE}))
+	rm -rf pkg/grpc-gateway/github.com
