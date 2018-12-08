@@ -1,17 +1,17 @@
 //https://cloud.google.com/apis/design/standard_methods#get
 syntax = "proto3";
 
-package v1alpha1.services;
+package v1alpha2.services;
 
-import "v1alpha1/types/faq.proto";
+import "v1alpha2/types/faq.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/andrewhowdencom/mtm-apis/pkg/go/v1alpha1/services";
+option go_package = "github.com/andrewhowdencom/mtm-apis/pkg/go/v1alpha2/services";
 
 service FaqService {
-	rpc GetFaq(GetFaqRequest) returns (v1alpha1.types.Faq) {
+	rpc GetFaq(GetFaqRequest) returns (v1alpha2.types.Faq) {
 		option (google.api.http) = {
-			get: "/v1alpha1/faq/{faq_id}"
+			get: "/v1alpha2/faq/{faq_id}"
 		};
 	}
 }

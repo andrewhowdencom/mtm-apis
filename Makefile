@@ -47,8 +47,8 @@ clean: ## Cleans up
 
 .PHONY: generate
 generate: ## Generates the specification and libraries
-	FILE='v1alpha1/services/*.proto' make generate-go generate-grpc-gateway
-	FILE='v1alpha1/types/*.proto' make generate-go
+	FILE='v1alpha2/services/*.proto' make generate-go generate-grpc-gateway
+	FILE='v1alpha2/types/*.proto' make generate-go
 	echo "Done"
 
 .PHONY: generate-go

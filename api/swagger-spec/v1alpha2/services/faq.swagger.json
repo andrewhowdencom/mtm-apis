@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1alpha1/services/faq.proto",
+    "title": "v1alpha2/services/faq.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1alpha1/faq/{faq_id}": {
+    "/v1alpha2/faq/{faq_id}": {
       "get": {
         "operationId": "GetFaq",
         "responses": {
@@ -47,6 +47,18 @@
         "faq_id": {
           "type": "string",
           "title": "Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier)\nExample: e1da1be2-eff2-11e8-a204-0f0dc88152cb"
+        },
+        "language": {
+          "type": "string",
+          "description": "Should be an english tag based on the IETF lanaguag tag system, delimited by an underscore.\n\nExamples:\n  - en_AU\n  - en_GB\n  - asf_AU\n\nSee:\n  - http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\n  - https://stackoverflow.com/a/3191726/3897856\n  - https://www.w3.org/International/articles/language-tags/"
+        },
+        "question": {
+          "type": "string",
+          "title": "Should be a fully formed question including punctuation that indicates it's a question\nExample: \"What is the date today?\""
+        },
+        "answer": {
+          "type": "string",
+          "title": "Should be an answer to the question defined in the field called \"question\"\nExample: \"It's Thursday, 46th of Noly, 2024\""
         }
       },
       "title": "FAQ represents a frequently asked question of some kind"

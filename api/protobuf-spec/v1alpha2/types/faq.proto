@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package v1alpha2.types;
+
+option go_package = "github.com/andrewhowdencom/mtm-apis/pkg/go/v1alpha2/types";
+
+// FAQ represents a frequently asked question of some kind
+message Faq {
+	// Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier)
+	// Example: e1da1be2-eff2-11e8-a204-0f0dc88152cb
+	string faq_id = 1;
+
+	// Should be an english tag based on the IETF lanaguag tag system, delimited by an underscore.
+	//
+	// Examples:
+	//   - en_AU
+	//   - en_GB
+	//   - asf_AU
+	//
+	// See:
+	//   - http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+	//   - https://stackoverflow.com/a/3191726/3897856
+	//   - https://www.w3.org/International/articles/language-tags/
+	string language = 2;
+
+	// Should be a fully formed question including punctuation that indicates it's a question
+	// Example: "What is the date today?"
+	string question = 3;
+
+	// Should be an answer to the question defined in the field called "question"
+	// Example: "It's Thursday, 46th of Noly, 2024"
+	string answer = 4;
+}
