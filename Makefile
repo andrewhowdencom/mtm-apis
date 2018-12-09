@@ -47,7 +47,7 @@ clean: ## Cleans up
 
 .PHONY: generate
 generate: ## Generates the specification and libraries
-	FILE='v1alpha2/services/*.proto' make generate-go generate-grpc-gateway
+	FILE='v1alpha2/services/*.proto' make generate-go
 	FILE='v1alpha2/types/*.proto' make generate-go
 	echo "Done"
 
@@ -58,18 +58,10 @@ generate-go: ## Generates the go specification
 		-I$$GOPATH/src \
 		-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 		--go_out=plugins=grpc:"../../pkg/go" \
+		--swagger_out=logtostderr=true:../swagger-spec \
+                --grpc-gateway_out="../../pkg/go" \
 		$${FILE}
 	mkdir -p pkg/go/$$(dirname $${FILE})
 	mv pkg/go/github.com/andrewhowdencom/mtm-apis/pkg/go/$$(dirname $${FILE}) pkg/go/$$(dirname $$(dirname $${FILE}))
 	rm -rf pkg/go/github.com
 
-generate-grpc-gateway: ## Generates the go reverse proxy tooling
-	cd api/protobuf-spec && \
-        protoc -I/usr/local/include -I. \
-                -I$$GOPATH/src \
-		-I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		--swagger_out=logtostderr=true:../swagger-spec \
-                --grpc-gateway_out="../../pkg/grpc-gateway" \
-		$${FILE}
-	mv pkg/grpc-gateway/github.com/andrewhowdencom/mtm-apis/pkg/go/$$(dirname $${FILE}) pkg/grpc-gateway/$$(dirname $$(dirname $${FILE}))
-	rm -rf pkg/grpc-gateway/github.com
