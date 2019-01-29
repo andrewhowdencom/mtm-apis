@@ -1,0 +1,158 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "v1alpha2/services/check-in.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1alpha2/faq/{faq_id}": {
+      "get": {
+        "operationId": "GetFaq",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/typesFaq"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "faq_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "FaqService"
+        ]
+      }
+    },
+    "/v1alpha2/check-in": {
+      "put": {
+        "operationId": "PutCheckIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufEmpty"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/typesCheckIn"
+            }
+          }
+        ],
+        "tags": [
+          "CheckInService"
+        ]
+      }
+    },
+    "/v1alpha2/check-in/{user_id}": {
+      "get": {
+        "operationId": "GetCheckIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/typesCheckIn"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CheckInService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "typesFaq": {
+      "type": "object",
+      "properties": {
+        "faq_id": {
+          "type": "string",
+          "title": "Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier)\nExample: e1da1be2-eff2-11e8-a204-0f0dc88152cb"
+        },
+        "language": {
+          "type": "string",
+          "description": "Should be an english tag based on the IETF lanaguag tag system, delimited by an underscore.\n\nExamples:\n  - en_AU\n  - en_GB\n  - asf_AU\n\nSee:\n  - http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\n  - https://stackoverflow.com/a/3191726/3897856\n  - https://www.w3.org/International/articles/language-tags/"
+        },
+        "question": {
+          "type": "string",
+          "title": "Should be a fully formed question including punctuation that indicates it's a question\nExample: \"What is the date today?\""
+        },
+        "answer": {
+          "type": "string",
+          "title": "Should be an answer to the question defined in the field called \"question\"\nExample: \"It's Thursday, 46th of Noly, 2024\""
+        }
+      },
+      "title": "FAQ represents a frequently asked question of some kind"
+    },
+    "protobufEmpty": {
+      "type": "object",
+      "description": "service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "title": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:"
+    },
+    "typesCheckIn": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "title": "Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier) of a user registered in Keybase\nExample: e1da1be2-eff2-11e8-a204-0f0dc88152cb"
+        },
+        "boarding": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Can be one of \n- true (yes)\n- false (no)\n\nShould default at \"no\"",
+          "title": "Whether the user will be boarding the flight"
+        },
+        "meal": {
+          "type": "string",
+          "description": "Example:\n- \"Vegitarian\"\n- \"Vegan\"",
+          "title": "In flight meal preferences. Can be a string of arbitrary length"
+        },
+        "song": {
+          "type": "string",
+          "description": "The song suggestion.\n\nExample\n- Merry Christmas\n- 10,000 Fists\n- Come sail away"
+        },
+        "children": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Example:\n- 1\n- 10",
+          "title": "How many children there will be"
+        },
+        "errata": {
+          "type": "string",
+          "description": "Example: \n- \"I don't like fish\"\n- \"Can additional people come?\"",
+          "title": "Any additional things we should know"
+        }
+      },
+      "title": "FAQ represents a frequently asked question of some kind"
+    }
+  }
+}

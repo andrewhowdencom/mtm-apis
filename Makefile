@@ -49,6 +49,7 @@ clean: ## Cleans up
 generate: ## Generates the specification and libraries
 	FILE='v1alpha2/services/*.proto' make generate-go
 	FILE='v1alpha2/types/*.proto' make generate-go
+	find . -name *.json | xargs jq --slurp '.[0] * .[1]' > api/swagger-spec/swagger.json
 	echo "Done"
 
 .PHONY: generate-go
@@ -64,4 +65,3 @@ generate-go: ## Generates the go specification
 	mkdir -p pkg/go/$$(dirname $${FILE})
 	mv pkg/go/github.com/andrewhowdencom/mtm-apis/pkg/go/$$(dirname $${FILE}) pkg/go/$$(dirname $$(dirname $${FILE}))
 	rm -rf pkg/go/github.com
-

@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package v1alpha2.types;
+
+option go_package = "github.com/andrewhowdencom/mtm-apis/pkg/go/v1alpha2/types";
+
+// FAQ represents a frequently asked question of some kind
+message CheckIn {
+	// Should be a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier) of a user registered in Keybase
+	// Example: e1da1be2-eff2-11e8-a204-0f0dc88152cb
+	string user_id = 1;
+	
+	// Whether the user will be boarding the flight
+	//
+	// Can be one of 
+	// - true (yes)
+	// - false (no)
+	//
+	// Should default at "no"
+	bool boarding = 2;
+
+	// In flight meal preferences. Can be a string of arbitrary length
+	//
+	// Example:
+	// - "Vegitarian"
+	// - "Vegan"
+	string meal = 3;
+
+	// The song suggestion.
+	// 
+	// Example
+	// - Merry Christmas
+	// - 10,000 Fists
+	// - Come sail away
+	string song = 4;
+
+	// How many children there will be
+	//
+	// Example:
+	// - 1
+	// - 10
+	int32 children = 5;
+	 
+	// Any additional things we should know
+	//
+	// Example: 
+	// - "I don't like fish"
+	// - "Can additional people come?"
+	string errata = 6;
+}

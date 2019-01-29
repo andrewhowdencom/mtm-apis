@@ -1,0 +1,30 @@
+//https://cloud.google.com/apis/design/standard_methods#get
+syntax = "proto3";
+
+package v1alpha2.services;
+
+import "v1alpha2/types/check-in.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/andrewhowdencom/mtm-apis/pkg/go/v1alpha2/services";
+
+service CheckInService {
+	rpc GetCheckIn(GetCheckInRequest) returns (v1alpha2.types.CheckIn) {
+		option (google.api.http) = {
+			get: "/v1alpha2/check-in/{user_id}"
+		};
+	}
+
+	rpc PutCheckIn(v1alpha2.types.CheckIn) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			put: "/v1alpha2/check-in",
+			body: '*'
+		};
+	}
+}
+
+// Takes a subset of the fields of "CheckIn"
+message GetCheckInRequest {
+	string user_id = 1;
+}
